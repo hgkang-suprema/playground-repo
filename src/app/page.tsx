@@ -1,17 +1,13 @@
 import Header from "@/components/layout/header";
+import TodoApp from "@/components/todo/TodoApp";
 
 export default function Home() {
   return (
     <>
-      <Header title="Playground" />
-      <div className="flex min-h-[calc(100vh-7rem)] items-center justify-center">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold tracking-tight">Welcome</h2>
-          <p className="text-lg text-zinc-500 dark:text-zinc-400">
-            This page will be replaced by AI-generated content.
-          </p>
-        </div>
-      </div>
+      <Header title="Todo" />
+      <main className="mx-auto max-w-3xl px-4 py-8 text-zinc-900 dark:text-zinc-100">
+        <TodoApp />
+      </main>
     </>
   );
 }
