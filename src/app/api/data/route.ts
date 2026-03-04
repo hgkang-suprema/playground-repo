@@ -9,13 +9,13 @@ import {
   mockTargets,
 } from "@/lib/mockData";
 
-// Local API response type (to avoid missing exports from '@/lib/types')
+// 로컬 API 응답 타입 (타입 누락을 방지하기 위해 간단히 정의)
 type ApiResponse<T> = { ok: true; data: T } | { ok: false; error: string };
 
-// Role type used for lightweight RBAC via header
+// 헤더를 이용한 경량 RBAC에 사용할 사용자 역할 타입
 type UserRole = "viewer" | "sales_rep" | "sales_manager" | "admin";
 
-// Quarter literal type aligned with mockData
+// mockData와 일치하는 분기(쿼터) 리터럴 타입
 type Quarter = "Q1" | "Q2" | "Q3" | "Q4";
 
 function isQuarter(value: string | null): value is Quarter {
@@ -27,7 +27,7 @@ function getRole(req: Request): UserRole {
   if (raw === "sales_rep" || raw === "sales_manager" || raw === "admin" || raw === "viewer") {
     return raw;
   }
-  // Default to viewer when header missing/invalid
+  // 헤더가 없거나 유효하지 않으면 기본적으로 viewer로 처리
   return "viewer";
 }
 
@@ -125,7 +125,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         return okJson(data);
       }
       case "auth": {
-        // Simple helper endpoint to introspect current role
+        // 현재 요청의 역할을 확인하기 위한 간단한 헬퍼 엔드포인트
         const role = getRole(request);
         return okJson<{ role: UserRole }>({ role });
       }
@@ -139,7 +139,7 @@ export async function GET(request: Request): Promise<NextResponse> {
   }
 }
 
-// Body type for target upsert operations
+// targets 생성/수정에 사용할 요청 본문 타입
 type TargetUpsertBody = {
   target_id?: string;
   department_id?: string;
@@ -173,7 +173,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       }
 
       const updated = upsertTarget({
-        target_id: body.target_id, // allow explicit id or let upsert generate one
+        target_id: body.target_id, // 명시적 id를 허용하거나 upsert가 id를 생성하도록 둠
         department_id: body.department_id,
         target_year: Number(body.target_year),
         target_quarter: quarter,
@@ -210,7 +210,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
 
       const existing = mockTargets.find((t) => t.target_id === body.target_id);
 
-      // Determine quarter
+      // 분기(쿼터) 결정
       let target_quarter: Quarter | undefined = undefined;
       if (isQuarter(typeof body.target_quarter === "string" ? body.target_quarter : null)) {
         target_quarter = body.target_quarter as Quarter;
@@ -218,7 +218,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
         target_quarter = existing.target_quarter;
       }
 
-      // Determine other required fields (fallback to existing when possible)
+      // 다른 필수 필드 결정 (가능하면 기존 값으로 대체)
       const department_id = body.department_id ?? existing?.department_id;
       const target_year = body.target_year ?? existing?.target_year;
       const target_amount = body.target_amount ?? existing?.target_amount;
@@ -249,10 +249,13 @@ export async function PUT(request: Request): Promise<NextResponse> {
   }
 }
 
-// Optionally provide a method stub for DELETE to extend later
+// 향후 확장을 위해 DELETE 메서드 스텁을 제공 (현재는 구현되지 않음)
 export async function DELETE(request: Request): Promise<NextResponse> {
   const url = new URL(request.url);
   const type = url.searchParams.get("type");
-  // Not implemented in this demo. Kept for future extensibility.
+  // 데모에서는 미구현 상태. 확장성 유지를 위해 남겨둠.
   return errorJson(`삭제 미구현: type=${type ?? "(none)"}`, 405);
 }
+
+// 파일 레벨 디폴트 익스포트(프로젝트 규칙에 따른 빈 기본 익스포트)
+export default {};
