@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { TrendingUp, Target, Users2, ShoppingCart, ChevronDown, ChevronUp } from "lucide-react";
 
-// Local minimal types (structural typing compatible)
+// 로컬 최소 타입 (구조적 타이핑과 호환)
 interface SalesOrder {
   order_id: string;
   order_date: string;
@@ -56,7 +56,7 @@ interface DashboardProps {
   error?: string | null;
 }
 
-// Utils
+// 유틸 함수
 function formatCurrency(value: number | undefined | null): string {
   const n = typeof value === "number" && isFinite(value) ? value : 0;
   return new Intl.NumberFormat("ko-KR", { style: "currency", currency: "KRW", maximumFractionDigits: 0 }).format(n);
@@ -72,7 +72,7 @@ function clampPercent(value: number): number {
   return Math.max(0, Math.min(100, value));
 }
 
-// Top KPI Card
+// 상단 KPI 카드
 interface TopKpiCardProps {
   title: string;
   value: string;
@@ -98,7 +98,7 @@ function TopKpiCard({ title, value, description, icon, extra }: TopKpiCardProps)
   );
 }
 
-// Targets Progress
+// 목표 진행률 컴포넌트
 interface TargetsProgressProps {
   targets: SalesTarget[];
 }
@@ -143,7 +143,7 @@ function TargetsProgress({ targets }: TargetsProgressProps): React.ReactElement 
   );
 }
 
-// SmallChart: simple inline SVG (bar or line)
+// SmallChart: 간단한 인라인 SVG (막대 또는 선)
 interface SmallChartProps {
   values: number[];
   variant?: "bar" | "line";
@@ -191,7 +191,7 @@ function SmallChart({ values, variant = "line", className }: SmallChartProps): R
   );
 }
 
-// Orders Table
+// 주문 테이블
 type OrderSortKey = "date" | "amount";
 interface OrdersTableProps {
   orders: SalesOrder[];
@@ -314,7 +314,7 @@ function OrderRow({ order, customer, product }: OrderRowProps): React.ReactEleme
   );
 }
 
-// Customers List (Top N)
+// 고객 목록 (상위 N)
 interface CustomersListProps {
   topCustomers: { customer_id: string; company_name: string; total: number }[];
 }
@@ -344,9 +344,9 @@ function CustomersList({ topCustomers }: CustomersListProps): React.ReactElement
   );
 }
 
-// Main Dashboard
+// 메인 대시보드
 export default function Dashboard({ orders = [], targets = [], customers = [], products = [], kpis, role = "viewer", className, loading, error, }: DashboardProps): React.ReactElement {
-  // Derived metrics
+  // 파생 메트릭
   const totalSales = useMemo(() => {
     if (kpis?.totalSales != null) return kpis.totalSales;
     return orders.reduce((sum, o) => sum + (o.total_amount ?? o.quantity * o.unit_price), 0);
@@ -380,7 +380,7 @@ export default function Dashboard({ orders = [], targets = [], customers = [], p
     return sorted;
   }, [orders, customers, kpis?.topCustomers]);
 
-  // Mini time series for chart (last N orders amounts by date)
+  // 차트용 미니 시계열 (최근 주문 날짜별 합계)
   const chartValues = useMemo(() => {
     if (orders.length === 0) return [0];
     const byDate = new Map<string, number>();

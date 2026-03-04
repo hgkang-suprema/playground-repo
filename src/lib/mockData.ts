@@ -67,7 +67,7 @@ interface HrEmployee {
 }
 
 // ---------------------------
-// Mock Data (In-memory)
+// 모의 데이터 (메모리)
 // ---------------------------
 
 export const mockCustomers: SalesCustomer[] = [
@@ -276,11 +276,11 @@ export const mockEmployees: HrEmployee[] = [
 ];
 
 // ---------------------------
-// Query & Mutation Utilities
+// 쿼리 및 변경(업서트) 유틸리티
 // ---------------------------
 
 function within(date: string, start?: string, end?: string): boolean {
-  // date, start, end are in YYYY-MM-DD format; lexicographic compare works
+  // date, start, end는 YYYY-MM-DD 포맷입니다. 문자 비교(lexicographic)가 가능합니다.
   if (start && date < start) return false;
   if (end && date > end) return false;
   return true;
@@ -401,7 +401,7 @@ export function upsertTarget(payload: UpsertTargetPayload): SalesTarget {
       mockTargets[idx] = updated;
       return updated;
     }
-    // if provided id not found, treat as create with given id
+    // 만약 제공된 ID가 존재하지 않으면, 해당 ID로 새 항목을 생성하는 것으로 처리합니다.
     const created: SalesTarget = {
       target_id: payload.target_id,
       department_id: payload.department_id,
@@ -414,7 +414,7 @@ export function upsertTarget(payload: UpsertTargetPayload): SalesTarget {
     return created;
   }
 
-  // Generate unique ID if not provided
+  // 제공된 ID가 없으면 고유 ID를 생성합니다.
   let newId = baseId;
   let seq = 1;
   while (mockTargets.some((t) => t.target_id === newId)) {
@@ -434,7 +434,7 @@ export function upsertTarget(payload: UpsertTargetPayload): SalesTarget {
   return created;
 }
 
-// Default export (optional convenience aggregator)
+// 기본 내보내기 (편의용 집계 객체)
 const MockDB = {
   mockOrders,
   mockTargets,
