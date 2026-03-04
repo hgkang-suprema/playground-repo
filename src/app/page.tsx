@@ -239,7 +239,7 @@ export default function Page() {
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-semibold text-foreground">Sales KPI Center</h1>
+            <h1 className="text-2xl font-semibold text-foreground">영업 KPI 센터</h1>
             <Badge variant="secondary" aria-label={`현재 역할: ${role}`}>{role}</Badge>
           </div>
 
