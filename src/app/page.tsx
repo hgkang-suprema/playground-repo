@@ -245,7 +245,7 @@ export default function Page() {
 
           <div className="flex items-center gap-2">
             <label htmlFor="role" className="text-sm text-muted-foreground">
-              역할 선택
+              Select role
             </label>
             <select
               id="role"
@@ -255,7 +255,7 @@ export default function Page() {
                 "rounded-md border border-input bg-background text-foreground px-3 py-2 text-sm",
                 "focus:outline-none focus:ring-2 focus:ring-primary transition"
               )}
-              aria-label="역할 선택"
+              aria-label="Select role"
             >
               <option value="viewer">viewer</option>
               <option value="sales_rep">sales_rep</option>
