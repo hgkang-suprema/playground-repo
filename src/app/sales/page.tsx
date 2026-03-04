@@ -250,6 +250,12 @@ export default function SalesPage() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+      {/* 전문적인 페이지 제목 추가 */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold text-foreground">영업 운영 대시보드</h1>
+        <p className="text-sm text-muted-foreground">기간 및 상태별 주문 현황과 상위 고객·제품 인사이트를 제공합니다.</p>
+      </div>
+
       <section aria-label="요약 KPI" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <SummaryCard
           icon={<ShoppingCart className="h-5 w-5" aria-hidden="true" />}
